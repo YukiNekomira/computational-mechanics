@@ -4,10 +4,10 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.12
-    jupytext_version: 1.6.0
+    format_version: 0.13
+    jupytext_version: 1.11.4
 kernelspec:
-  display_name: Python 3
+  display_name: Python 3 (ipykernel)
   language: python
   name: python3
 ---
@@ -578,7 +578,9 @@ Throughout this course module, you will be drawing from the following references
     c. What is the result of the following logical operation, `volume>1000` (in inches^3)
 
 ```{code-cell} ipython3
-
+volume = 12.5*11*14
+density = 31/volume 
+print (volume, density)
 ```
 
 2. Use the variables given below, `str1` and `str2`, and check the following 
@@ -592,8 +594,13 @@ Throughout this course module, you will be drawing from the following references
     d. How could you force (b) to be true? [Hint](https://docs.python.org/3/library/stdtypes.html?highlight=str.lower#str.lower) or [Hint](https://docs.python.org/3/library/stdtypes.html?highlight=str.lower#str.upper)
 
 ```{code-cell} ipython3
+
 str1 = 'Python'
 str2 = 'python'
+print('a', str1<str2)
+print('b', str1==str2)
+print('c', str1>str2)
+print('d', str.lower(str1)==str2)
 ```
 
 3. The following code has an error, fix the error so that the correct result is returned:
@@ -611,7 +618,13 @@ else:
 ```
 
 ```{code-cell} ipython3
+x=1
+y=20
 
+if x<y and y==20:
+    print('y is 20 and x is less than y')
+else:
+    print('x is not less than y')
 ```
 
 4. Create a script that takes the clock hour in 24 hours and prints the clock hour with am or pm. 
@@ -624,6 +637,18 @@ if time > 12:
     print(time - 12, 'PM')
 elif time < 12:
     print(time, 'AM')
+```
+
+```{code-cell} ipython3
+time = 24
+if time > 12 and time < 24:
+    print(time - 12, 'PM')
+elif time < 12:
+    print(time, 'AM')
+elif time == 12:
+    print (time,'PM')
+elif time == 24:
+    print(time-24, 'AM')
 ```
 
 ```{code-cell} ipython3
