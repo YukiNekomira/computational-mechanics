@@ -4,10 +4,10 @@ jupytext:
   text_representation:
     extension: .md
     format_name: myst
-    format_version: 0.12
-    jupytext_version: 1.6.0
+    format_version: 0.13
+    jupytext_version: 1.11.4
 kernelspec:
-  display_name: Python 3
+  display_name: Python 3 (ipykernel)
   language: python
   name: python3
 ---
@@ -639,16 +639,41 @@ print('years=',year)
 print('population =', pop)
 ```
 
-
 ```{code-cell} ipython3
 print('average population changes 1900-1950, 1950-2000, 2000-2020')
 print((pop[1:] - pop[0:-1])/(year[1:] - year[0:-1]))
 print('average growth of 1900 - 2020')
 print(np.mean((pop[1:] - pop[0:-1])/(year[1:] - year[0:-1])))
+grow1 = ((pop[1:2]-pop[0:1])/(year[1:2]-year[0:1])) 
+grow2 = ((pop[2:3]-pop[1:2])/(year[2:3]-year[1:2])) 
+grow1 = ((pop[3:4]-pop[2:3])/(year[3:4]-year[2:3])) 
+ag1 = grow1/pop[0:1]
+ag2 = grow1/pop[2:3]
+ag3 = grow1/pop[3:4]
+print('Growth from 1900-1950=',ag1)
+print('Growth from 1950-2000=',ag2)
+print('Growth from 2000-2020=',ag3)
+plt.plot(year,pop, label = 'analytical')
+def dxdt(x):
+    return kg*x
+kg = .013
+N0 = 1578000000.
+y = np.zeros(len(t))
+step = 20
+y[0] = N0
+t = (np.arange(year[0:1],2021,step))
+
+for i in range(1, len(t)):
+    y[i] = y[i-1]+ dxdt(y[i-1]*step)
+print(y)
+plt.plot(t,y,label = 'Numerical')
+plt.axis([1900,2021,0,8000000000])
+plt.legend()
+print(t)
+print("Discussion Question: No it will not, it will get to an approximate.As this is a numerical analysis and avergae of population growth.This does not account for any events that may have happened to affect human population such as war.Also it will approach the analytical solution not the measured data") 
 ```
 
 __d.__ As the number of time steps increases, the Euler approximation approaches the analytical solution, not the measured data. The best-case scenario is that the Euler solution is the same as the analytical solution.
-
 
 +++
 
@@ -678,7 +703,38 @@ def exptaylor(x,n):
         for i in range(1,n):
             ex+=x**(i+1)/factorial(i+1) # add the nth-order result for each step in loop
         return ex
-        
+print(exptaylor(1,2))
+print(np.exp(1))
+print('There seems to be a 8% difference between the error of exptaylor and np.exp')
+
+```
+
+```{code-cell} ipython3
+%%time
+exptaylor(1,2)
+```
+
+```{code-cell} ipython3
+%%time
+exptaylor(1,10)
+```
+
+```{code-cell} ipython3
+%%time
+exptaylor(1,100000)
+```
+
+```{code-cell} ipython3
+print('I tried with smaller numbers, 10000 took about 31 second, and 100000 might take around 10 times longer to 30 minutes to compute')
+```
+
+```{code-cell} ipython3
+exact = np.exp(2)
+N = 30
+errors = np.zeros(N)
+for i in range(N):
+    errors[i] = np.abs((exptaylor(2, i)-exact))/exact
+plt.semilogy(np.arange(N),errors)
 ```
 
 ```{code-cell} ipython3
